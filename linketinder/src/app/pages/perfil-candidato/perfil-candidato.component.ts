@@ -24,30 +24,49 @@ interface Stats {
 })
 export class PerfilCandidatoComponent implements OnInit {
   candidato: Candidato = {
-    nome: 'João Silva',
-    email: 'joao@email.com',
-    dataNascimento: '1995-03-15',
-    tecnologias: ['JavaScript', 'TypeScript', 'Angular', 'Node.js', 'Python', 'React']
+    nome: '',
+    email: '',
+    dataNascimento: '',
+    tecnologias: []
   };
 
   stats: Stats = {
-    likes: 23,
-    matches: 5,
-    visualizacoes: 156
+    likes: 0,
+    matches: 0,
+    visualizacoes: 0
   };
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    // Aqui você carregaria os dados do candidato do backend
     this.carregarDadosCandidato();
   }
 
   carregarDadosCandidato() {
-    // Simulação de dados - substituir por chamada real ao backend
-    const dadosSalvos = localStorage.getItem('candidato');
-    if (dadosSalvos) {
-      this.candidato = JSON.parse(dadosSalvos);
+    const candidatoData = localStorage.getItem('candidatoData');
+    if (candidatoData) {
+      const dados = JSON.parse(candidatoData);
+      this.candidato = {
+        nome: dados.nome,
+        email: dados.email,
+        dataNascimento: dados.dataNascimento,
+        tecnologias: dados.tecnologias || []
+      };
+      
+      // Estatísticas iniciais para novo usuário
+      this.stats = {
+        likes: Math.floor(Math.random() * 10),
+        matches: Math.floor(Math.random() * 5),
+        visualizacoes: Math.floor(Math.random() * 20) + 5
+      };
+    } else {
+      // Dados padrão caso não tenha dados salvos
+      this.candidato = {
+        nome: 'Usuário',
+        email: 'usuario@email.com',
+        dataNascimento: '1990-01-01',
+        tecnologias: []
+      };
     }
   }
 
@@ -55,10 +74,9 @@ export class PerfilCandidatoComponent implements OnInit {
     const hoje = new Date();
     const nascimento = new Date(dataNascimento);
     let idade = hoje.getFullYear() - nascimento.getFullYear();
-    const mesAtual = hoje.getMonth();
-    const mesNascimento = nascimento.getMonth();
+    const mes = hoje.getMonth() - nascimento.getMonth();
     
-    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate())) {
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
       idade--;
     }
     
@@ -66,22 +84,19 @@ export class PerfilCandidatoComponent implements OnInit {
   }
 
   calcularExperiencia(): string {
-    const anoAtual = new Date().getFullYear();
-    const anoNascimento = new Date(this.candidato.dataNascimento).getFullYear();
-    const idadeTrabalho = anoAtual - anoNascimento - 18; // Assumindo que começou a trabalhar aos 18
-    
-    if (idadeTrabalho <= 0) return 'menos de 1 ano';
-    if (idadeTrabalho === 1) return '1 ano';
-    return `${idadeTrabalho} anos`;
+    const idade = this.calcularIdade(this.candidato.dataNascimento);
+    const experiencia = Math.max(0, idade - 18);
+    return experiencia > 0 ? `${experiencia} anos` : 'Iniciante';
   }
 
   getTecnologiasPrincipais(): string {
-    if (this.candidato.tecnologias.length === 0) return 'Diversas tecnologias';
+    if (this.candidato.tecnologias.length === 0) return 'Tecnologias diversas';
     if (this.candidato.tecnologias.length <= 2) return this.candidato.tecnologias.join(' e ');
-    return this.candidato.tecnologias.slice(0, 2).join(', ') + ' e outras';
+    return this.candidato.tecnologias.slice(0, 2).join(', ') + ` e mais ${this.candidato.tecnologias.length - 2}`;
   }
 
   editarPerfil() {
-    this.router.navigate(['/editar-perfil']);
+    // Aqui você pode implementar a edição do perfil
+    alert('Funcionalidade de edição será implementada em breve!');
   }
 }

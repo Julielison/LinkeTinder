@@ -1,112 +1,63 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CandidatoFormComponent } from './candidato-form/candidato-form.component';
+import { EmpresaFormComponent } from './empresa-form/empresa-form.component';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, CandidatoFormComponent, EmpresaFormComponent],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent {
-  @ViewChild('tecnologiaInput') tecnologiaInput!: ElementRef;
-  
   userType: 'candidato' | 'empresa' = 'candidato';
-  cadastroForm: FormGroup;
-  tecnologias: string[] = [];
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router
-  ) {
-    this.cadastroForm = this.createForm();
-  }
-
-  createForm(): FormGroup {
-    return this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
-      
-      // Campos para candidato
-      nome: [''],
-      dataNascimento: [''],
-      
-      // Campos para empresa
-      nomeEmpresa: [''],
-      local: ['']
-    });
-  }
+  constructor(private router: Router) {}
 
   setUserType(type: 'candidato' | 'empresa') {
     this.userType = type;
-    this.tecnologias = [];
-    this.updateValidators();
   }
 
-  updateValidators() {
-    // Remove todos os validators primeiro
-    this.cadastroForm.get('nome')?.clearValidators();
-    this.cadastroForm.get('dataNascimento')?.clearValidators();
-    this.cadastroForm.get('nomeEmpresa')?.clearValidators();
-    this.cadastroForm.get('local')?.clearValidators();
-
-    if (this.userType === 'candidato') {
-      this.cadastroForm.get('nome')?.setValidators([Validators.required]);
-      this.cadastroForm.get('dataNascimento')?.setValidators([Validators.required]);
-    } else {
-      this.cadastroForm.get('nomeEmpresa')?.setValidators([Validators.required]);
-      this.cadastroForm.get('local')?.setValidators([Validators.required]);
-    }
-
-    // Atualiza a validação
-    this.cadastroForm.get('nome')?.updateValueAndValidity();
-    this.cadastroForm.get('dataNascimento')?.updateValueAndValidity();
-    this.cadastroForm.get('nomeEmpresa')?.updateValueAndValidity();
-    this.cadastroForm.get('local')?.updateValueAndValidity();
-  }
-
-  adicionarTecnologia(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const input = event.target as HTMLInputElement;
-      const tecnologia = input.value.trim();
-      
-      if (tecnologia && !this.tecnologias.includes(tecnologia)) {
-        this.tecnologias.push(tecnologia);
-        input.value = '';
-      }
-    }
-  }
-
-  removerTecnologia(index: number) {
-    this.tecnologias.splice(index, 1);
-  }
-
-  isFieldInvalid(fieldName: string): boolean {
-    const field = this.cadastroForm.get(fieldName);
-    return !!(field && field.invalid && (field.dirty || field.touched));
-  }
-
-  onSubmit() {
-    if (this.cadastroForm.valid) {
-      const formData = {
-        ...this.cadastroForm.value,
-        userType: this.userType,
-        tecnologias: this.userType === 'candidato' ? this.tecnologias : undefined
+  onFormSubmit(formData: any) {
+    console.log('Dados do cadastro:', formData);
+    
+    if (formData.userType === 'candidato') {
+      // Salvar dados do candidato como usuário logado
+      const candidatoLogado = {
+        id: Date.now(), // ID temporário
+        nome: formData.nome,
+        email: formData.email,
+        dataNascimento: formData.dataNascimento,
+        tecnologias: formData.tecnologias || [],
+        tipo: 'candidato'
       };
-
-      console.log('Dados do cadastro:', formData);
       
-      // Aqui será feita a chamada para o backend
-      alert(`Cadastro ${this.userType} realizado com sucesso!`);
-      this.router.navigate(['/login']);
+      localStorage.setItem('candidato', JSON.stringify(candidatoLogado));
+      localStorage.setItem('candidatoData', JSON.stringify(formData));
+      localStorage.setItem('token', 'temp-token-' + Date.now()); // Token temporário
+      
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['/perfil-candidato']);
+      
     } else {
-      // Marca todos os campos como touched para mostrar os erros
-      Object.keys(this.cadastroForm.controls).forEach(key => {
-        this.cadastroForm.get(key)?.markAsTouched();
-      });
+      // Salvar dados da empresa como usuário logado
+      const empresaLogada = {
+        id: Date.now(), // ID temporário
+        nomeEmpresa: formData.nomeEmpresa,
+        email: formData.email,
+        local: formData.local,
+        tipo: 'empresa'
+      };
+      
+      localStorage.setItem('empresa', JSON.stringify(empresaLogada));
+      localStorage.setItem('empresaData', JSON.stringify(formData));
+      localStorage.setItem('token', 'temp-token-' + Date.now()); // Token temporário
+      
+      alert('Cadastro empresa realizado com sucesso!');
+      // Redirecionar para uma página da empresa (você pode criar depois)
+      this.router.navigate(['/empresas']);
     }
   }
 
