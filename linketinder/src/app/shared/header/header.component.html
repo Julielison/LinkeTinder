@@ -43,18 +43,6 @@
       <!-- User Actions -->
       <div class="user-actions">
         <button 
-          *ngIf="!showNavigation" 
-          class="btn-login" 
-          (click)="onLogin()">
-          Login
-        </button>
-        <button 
-          *ngIf="!showNavigation" 
-          class="btn-register" 
-          (click)="onRegister()">
-          Cadastrar
-        </button>
-        <button 
           *ngIf="showNavigation" 
           class="btn-logout" 
           (click)="onLogout()">

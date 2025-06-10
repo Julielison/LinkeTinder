@@ -54,14 +54,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onLogin() {
-    this.router.navigate(['/login']);
-  }
-
-  onRegister() {
-    this.router.navigate(['/cadastro']);
-  }
-
   onLogout() {
     // Limpar dados do usuário
     localStorage.removeItem('candidato');
