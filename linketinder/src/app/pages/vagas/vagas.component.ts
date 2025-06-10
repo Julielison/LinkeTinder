@@ -28,7 +28,7 @@ interface Vaga {
 @Component({
   selector: 'app-vagas',
   standalone: true,
-  imports: [CommonModule, FormsModule, VagaCardComponent], // Adicionar FormsModule aqui
+  imports: [CommonModule, FormsModule, VagaCardComponent],
   templateUrl: './vagas.component.html',
   styleUrls: ['./vagas.component.css']
 })
@@ -217,7 +217,7 @@ export class VagasComponent implements OnInit {
 
   onVagaInteracao(event: {vagaId: number, acao: 'like' | 'dislike'}) {
     console.log(`Vaga ${event.vagaId} - Ação: ${event.acao}`);
-    // Aqui você pode implementar a lógica de like/dislike
+    // Implementar a lógica de like/dislike
     // Remover a vaga da lista após interação
     this.vagasFiltradas = this.vagasFiltradas.filter(vaga => vaga.id !== event.vagaId);
   }

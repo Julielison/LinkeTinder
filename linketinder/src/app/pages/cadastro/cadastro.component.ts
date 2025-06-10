@@ -56,7 +56,7 @@ export class CadastroComponent {
       localStorage.setItem('token', 'temp-token-' + Date.now()); // Token temporário
       
       alert('Cadastro empresa realizado com sucesso!');
-      // Redirecionar para uma página da empresa (você pode criar depois)
+      // Redirecionar para uma página da empresa (Para criar)
       this.router.navigate(['/empresas']);
     }
   }

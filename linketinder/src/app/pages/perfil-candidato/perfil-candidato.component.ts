@@ -96,7 +96,6 @@ export class PerfilCandidatoComponent implements OnInit {
   }
 
   editarPerfil() {
-    // Aqui você pode implementar a edição do perfil
     alert('Funcionalidade de edição será implementada em breve!');
   }
 }
