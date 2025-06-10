@@ -6,18 +6,60 @@
         <a routerLink="/">LinkeTinder</a>
       </div>
       
-      <!-- Navigation -->
-      <nav class="main-nav">
+      <!-- Navigation - Campos alternativos -->
+      <nav class="main-nav" *ngIf="showNavigation">
         <ul>
-          <li><a routerLink="/empresas" routerLinkActive="active">Empresas</a></li>
-          <li><a routerLink="/candidatos" routerLinkActive="active">Candidatos</a></li>
+          <li *ngIf="activeView === 'empresas'">
+            <a routerLink="/empresas" routerLinkActive="active">
+              <span class="nav-icon">🏢</span>
+              Empresas
+            </a>
+          </li>
+          <li *ngIf="activeView === 'vagas'">
+            <a routerLink="/vagas" routerLinkActive="active">
+              <span class="nav-icon">💼</span>
+              Vagas
+            </a>
+          </li>
         </ul>
       </nav>
       
+      <!-- Toggle Controls -->
+      <div class="view-controls" *ngIf="showNavigation">
+        <button 
+          class="toggle-btn"
+          [class.active]="activeView === 'empresas'"
+          (click)="setActiveView('empresas')">
+          🏢 Empresas
+        </button>
+        <button 
+          class="toggle-btn"
+          [class.active]="activeView === 'vagas'"
+          (click)="setActiveView('vagas')">
+          💼 Vagas
+        </button>
+      </div>
+      
       <!-- User Actions -->
       <div class="user-actions">
-        <button class="btn-login" (click)="onLogin()">Login</button>
-        <button class="btn-register" (click)="onRegister()">Cadastrar</button>
+        <button 
+          *ngIf="!showNavigation" 
+          class="btn-login" 
+          (click)="onLogin()">
+          Login
+        </button>
+        <button 
+          *ngIf="!showNavigation" 
+          class="btn-register" 
+          (click)="onRegister()">
+          Cadastrar
+        </button>
+        <button 
+          *ngIf="showNavigation" 
+          class="btn-logout" 
+          (click)="onLogout()">
+          <span>🚪</span> Sair
+        </button>
       </div>
     </div>
   </div>

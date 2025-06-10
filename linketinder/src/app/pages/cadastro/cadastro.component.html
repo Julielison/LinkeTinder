@@ -1,0 +1,154 @@
+<div class="cadastro-container">
+  <div class="cadastro-card">
+    <div class="header-section">
+      <h1>Criar Conta</h1>
+      <p>Junte-se ao LinkeTinder e encontre sua próxima oportunidade!</p>
+    </div>
+
+    <!-- Toggle para selecionar tipo de usuário -->
+    <div class="user-type-toggle">
+      <button 
+        class="toggle-btn" 
+        [class.active]="userType === 'candidato'"
+        (click)="setUserType('candidato')">
+        <span class="icon">👤</span>
+        Candidato
+      </button>
+      <button 
+        class="toggle-btn" 
+        [class.active]="userType === 'empresa'"
+        (click)="setUserType('empresa')">
+        <span class="icon">🏢</span>
+        Empresa
+      </button>
+    </div>
+
+    <!-- Formulário -->
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="cadastro-form">
+      
+      <!-- Campos comuns -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          placeholder="seu@email.com"
+          [class.error]="isFieldInvalid('email')">
+        <div class="error-message" *ngIf="isFieldInvalid('email')">
+          Email é obrigatório e deve ser válido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input 
+          type="password" 
+          id="senha" 
+          formControlName="senha"
+          placeholder="********"
+          [class.error]="isFieldInvalid('senha')">
+        <div class="error-message" *ngIf="isFieldInvalid('senha')">
+          Senha deve ter pelo menos 6 caracteres
+        </div>
+      </div>
+
+      <!-- Campos específicos para Candidato -->
+      <div *ngIf="userType === 'candidato'">
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input 
+            type="text" 
+            id="nome" 
+            formControlName="nome"
+            placeholder="Seu nome completo"
+            [class.error]="isFieldInvalid('nome')">
+          <div class="error-message" *ngIf="isFieldInvalid('nome')">
+            Nome é obrigatório
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dataNascimento">Data de Nascimento</label>
+          <input 
+            type="date" 
+            id="dataNascimento" 
+            formControlName="dataNascimento"
+            [class.error]="isFieldInvalid('dataNascimento')">
+          <div class="error-message" *ngIf="isFieldInvalid('dataNascimento')">
+            Data de nascimento é obrigatória
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tecnologias">Tecnologias</label>
+          <div class="tecnologias-input">
+            <input 
+              type="text" 
+              placeholder="Digite uma tecnologia e pressione Enter"
+              (keypress)="adicionarTecnologia($event)"
+              #tecnologiaInput>
+          </div>
+          <div class="tecnologias-list">
+            <span 
+              *ngFor="let tech of tecnologias; let i = index" 
+              class="tecnologia-tag">
+              {{ tech }}
+              <button type="button" (click)="removerTecnologia(i)">×</button>
+            </span>
+          </div>
+          <small class="help-text">Pressione Enter para adicionar cada tecnologia</small>
+        </div>
+      </div>
+
+      <!-- Campos específicos para Empresa -->
+      <div *ngIf="userType === 'empresa'">
+        <div class="form-group">
+          <label for="nomeEmpresa">Nome da Empresa</label>
+          <input 
+            type="text" 
+            id="nomeEmpresa" 
+            formControlName="nomeEmpresa"
+            placeholder="Nome da sua empresa"
+            [class.error]="isFieldInvalid('nomeEmpresa')">
+          <div class="error-message" *ngIf="isFieldInvalid('nomeEmpresa')">
+            Nome da empresa é obrigatório
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="local">Localização</label>
+          <input 
+            type="text" 
+            id="local" 
+            formControlName="local"
+            placeholder="Cidade, Estado"
+            [class.error]="isFieldInvalid('local')">
+          <div class="error-message" *ngIf="isFieldInvalid('local')">
+            Localização é obrigatória
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="cadastroForm.invalid">
+          Criar Conta
+        </button>
+        <button 
+          type="button" 
+          class="btn-secondary"
+          (click)="voltarParaHome()">
+          Voltar
+        </button>
+      </div>
+
+      <div class="login-link">
+        <p>Já tem uma conta? <a (click)="irParaLogin()">Faça login</a></p>
+      </div>
+    </form>
+  </div>
+</div>
