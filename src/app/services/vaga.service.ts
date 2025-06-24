@@ -22,7 +22,7 @@ export interface Vaga {
   descricao: string;
   requisitos: string[];
   beneficios: string[];
-  publicadaEm: string; // ← Mantém como string (formato da API)
+  publicadaEm: string;
   nivel: 'Júnior' | 'Pleno' | 'Sênior' | 'Especialista';
 }
 
