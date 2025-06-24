@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, inject, signal, computed, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -10,13 +10,20 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   styleUrls: ['./empresa-form.component.css']
 })
 export class EmpresaFormComponent {
-  @Output() formSubmit = new EventEmitter<any>();
-  @Output() voltarClick = new EventEmitter<void>();
-  @Output() loginClick = new EventEmitter<void>();
-  
-  empresaForm: FormGroup;
+  private fb = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {
+  // Usando a nova sintaxe output()
+  formSubmit = output<any>();
+  voltarClick = output<void>();
+  loginClick = output<void>();
+
+  empresaForm: FormGroup;
+  isSubmitting = signal(false);
+
+  // Computed signals para validação
+  isFormValid = computed(() => this.empresaForm?.valid || false);
+
+  constructor() {
     this.empresaForm = this.createForm();
   }
 
@@ -34,13 +41,38 @@ export class EmpresaFormComponent {
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
-  onSubmit() {
-    if (this.empresaForm.valid) {
-      const formData = {
-        ...this.empresaForm.value,
-        userType: 'empresa'
+  getFieldErrorMessage(fieldName: string): string {
+    const field = this.empresaForm.get(fieldName);
+    if (!field || !field.errors) return '';
+
+    const errors = field.errors;
+    if (errors['required']) {
+      const fieldLabels: Record<string, string> = {
+        email: 'Email',
+        senha: 'Senha',
+        nomeEmpresa: 'Nome da empresa',
+        local: 'Localização'
       };
-      this.formSubmit.emit(formData);
+      return `${fieldLabels[fieldName]} é obrigatório`;
+    }
+    if (errors['email']) return 'Email deve ser válido';
+    if (errors['minlength']) return 'Senha deve ter pelo menos 6 caracteres';
+
+    return '';
+  }
+
+  async onSubmit() {
+    if (this.empresaForm.valid) {
+      this.isSubmitting.set(true);
+      try {
+        const formData = {
+          ...this.empresaForm.value,
+          userType: 'empresa'
+        };
+        this.formSubmit.emit(formData);
+      } finally {
+        this.isSubmitting.set(false);
+      }
     } else {
       Object.keys(this.empresaForm.controls).forEach(key => {
         this.empresaForm.get(key)?.markAsTouched();

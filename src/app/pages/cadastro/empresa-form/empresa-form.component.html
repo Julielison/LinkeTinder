@@ -2,69 +2,82 @@
   <!-- Campos comuns -->
   <div class="form-group">
     <label for="email">Email</label>
-    <input 
-      type="email" 
-      id="email" 
+    <input
+      type="email"
+      id="email"
       formControlName="email"
       placeholder="seu@email.com"
       [class.error]="isFieldInvalid('email')">
-    <div class="error-message" *ngIf="isFieldInvalid('email')">
-      Email é obrigatório e deve ser válido
-    </div>
+    @if (isFieldInvalid('email')) {
+      <div class="error-message">
+        {{ getFieldErrorMessage('email') }}
+      </div>
+    }
   </div>
 
   <div class="form-group">
     <label for="senha">Senha</label>
-    <input 
-      type="password" 
-      id="senha" 
+    <input
+      type="password"
+      id="senha"
       formControlName="senha"
       placeholder="********"
       [class.error]="isFieldInvalid('senha')">
-    <div class="error-message" *ngIf="isFieldInvalid('senha')">
-      Senha deve ter pelo menos 6 caracteres
-    </div>
+    @if (isFieldInvalid('senha')) {
+      <div class="error-message">
+        {{ getFieldErrorMessage('senha') }}
+      </div>
+    }
   </div>
 
   <!-- Campos específicos para Empresa -->
   <div class="form-group">
     <label for="nomeEmpresa">Nome da Empresa</label>
-    <input 
-      type="text" 
-      id="nomeEmpresa" 
+    <input
+      type="text"
+      id="nomeEmpresa"
       formControlName="nomeEmpresa"
       placeholder="Nome da sua empresa"
       [class.error]="isFieldInvalid('nomeEmpresa')">
-    <div class="error-message" *ngIf="isFieldInvalid('nomeEmpresa')">
-      Nome da empresa é obrigatório
-    </div>
+    @if (isFieldInvalid('nomeEmpresa')) {
+      <div class="error-message">
+        {{ getFieldErrorMessage('nomeEmpresa') }}
+      </div>
+    }
   </div>
 
   <div class="form-group">
     <label for="local">Localização</label>
-    <input 
-      type="text" 
-      id="local" 
+    <input
+      type="text"
+      id="local"
       formControlName="local"
       placeholder="Cidade, Estado"
       [class.error]="isFieldInvalid('local')">
-    <div class="error-message" *ngIf="isFieldInvalid('local')">
-      Localização é obrigatória
-    </div>
+    @if (isFieldInvalid('local')) {
+      <div class="error-message">
+        {{ getFieldErrorMessage('local') }}
+      </div>
+    }
   </div>
 
   <!-- Botões -->
   <div class="form-actions">
-    <button 
-      type="submit" 
+    <button
+      type="submit"
       class="btn-primary"
-      [disabled]="empresaForm.invalid">
-      Criar Conta
+      [disabled]="!isFormValid() || isSubmitting()">
+      @if (isSubmitting()) {
+        Criando...
+      } @else {
+        Criar Conta
+      }
     </button>
-    <button 
-      type="button" 
+    <button
+      type="button"
       class="btn-secondary"
-      (click)="onVoltarClick()">
+      (click)="onVoltarClick()"
+      [disabled]="isSubmitting()">
       Voltar
     </button>
   </div>
