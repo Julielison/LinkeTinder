@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed, model } from '@angular/core';
+import { Component, signal, computed, model } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VagaCardComponent } from './vaga-card/vaga-card.component';
@@ -32,16 +32,13 @@ interface Vaga {
   templateUrl: './vagas.component.html',
   styleUrls: ['./vagas.component.css']
 })
-export class VagasComponent implements OnInit {
-  // Signals para gerenciar estado
-  private vagas = signal<Vaga[]>([]);
+export class VagasComponent {
+  private vagas = signal<Vaga[]>(this.getDadosVagas());
 
-  // Models para two-way binding
   filtroTecnologia = model('');
   filtroModalidade = model('');
   filtroNivel = model('');
 
-  // Computed signal para vagas filtradas
   vagasFiltradas = computed(() => {
     const vagas = this.vagas();
     const tecFilter = this.filtroTecnologia().toLowerCase();
@@ -72,13 +69,9 @@ export class VagasComponent implements OnInit {
   totalVagasEncontradas = computed(() => this.vagasFiltradas().length);
   hasVagas = computed(() => this.totalVagasEncontradas() > 0);
 
-  ngOnInit() {
-    this.carregarVagas();
-  }
-
-  carregarVagas() {
-    // Dados fake de vagas
-    const vagasData: Vaga[] = [
+  // Método privado para obter dados das vagas
+  private getDadosVagas(): Vaga[] {
+    return [
       {
         id: 1,
         titulo: 'Desenvolvedor Full Stack',
@@ -218,8 +211,16 @@ export class VagasComponent implements OnInit {
         nivel: 'Sênior'
       }
     ];
+  }
 
-    this.vagas.set(vagasData);
+  // Método para recarregar vagas (se necessário)
+  recarregarVagas() {
+    this.vagas.set(this.getDadosVagas());
+  }
+
+  // Método para adicionar nova vaga
+  adicionarVaga(novaVaga: Vaga) {
+    this.vagas.update(vagas => [...vagas, novaVaga]);
   }
 
   limparFiltros() {
