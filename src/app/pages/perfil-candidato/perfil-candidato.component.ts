@@ -55,7 +55,7 @@ export class PerfilCandidatoComponent {
         dataNascimento: dados.dataNascimento,
         tecnologias: dados.tecnologias || []
       });
-      
+
       // Estatísticas iniciais para novo usuário
       this.stats.set({
         likes: Math.floor(Math.random() * 10),
@@ -78,11 +78,11 @@ export class PerfilCandidatoComponent {
     const nascimento = new Date(dataNascimento);
     let idade = hoje.getFullYear() - nascimento.getFullYear();
     const mes = hoje.getMonth() - nascimento.getMonth();
-    
+
     if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
       idade--;
     }
-    
+
     return idade;
   }
 
