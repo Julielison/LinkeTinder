@@ -5,68 +5,74 @@
       <div class="logo">
         <a routerLink="/">LinkeTinder</a>
       </div>
-      
-      
+
       <!-- Toggle Controls baseados no tipo de usuário -->
-      <div class="view-controls" *ngIf="showNavigation">
-        
-        <!-- Toggle para candidatos -->
-        <ng-container *ngIf="userType === 'candidato'">
-          <button 
-            class="toggle-btn"
-            [class.active]="activeView === 'vagas'"
-            (click)="setActiveView('vagas')">
-            💼 Vagas
-          </button>
-        </ng-container>
-        
-        <!-- Toggle para empresas -->
-        <ng-container *ngIf="userType === 'empresa'">
-          <button 
-            class="toggle-btn"
-            [class.active]="activeView === 'candidatos'"
-            (click)="setActiveView('candidatos')">
-            👤 Candidatos
-          </button>
-          <button 
-            class="toggle-btn"
-            [class.active]="activeView === 'vagas'"
-            (click)="setActiveView('vagas')">
-            💼 Minhas Vagas
-          </button>
-        </ng-container>
-      </div>
-      
+      @if (showNavigation()) {
+        <div class="view-controls">
+
+          <!-- Toggle para candidatos -->
+          @if (isCandidato()) {
+            <button
+              class="toggle-btn"
+              [class.active]="activeView() === 'vagas'"
+              (click)="setActiveView('vagas')">
+              💼 Vagas
+            </button>
+          }
+
+          <!-- Toggle para empresas -->
+          @if (isEmpresa()) {
+            <button
+              class="toggle-btn"
+              [class.active]="activeView() === 'candidatos'"
+              (click)="setActiveView('candidatos')">
+              👤 Candidatos
+            </button>
+            <button
+              class="toggle-btn"
+              [class.active]="activeView() === 'vagas'"
+              (click)="setActiveView('vagas')">
+              💼 Minhas Vagas
+            </button>
+          }
+        </div>
+      }
+
       <!-- User Actions -->
       <div class="user-actions">
         <!-- Mostrar nome do usuário -->
-        <span *ngIf="showNavigation" class="user-name">
-          Olá, {{ userName }}!
-        </span>
-        
+        @if (showNavigation()) {
+          <span class="user-name">
+            Olá, {{ userName() }}!
+          </span>
+        }
+
         <!-- Link para perfil (apenas para candidatos) -->
-        <a 
-          *ngIf="showNavigation && userType === 'candidato'" 
-          routerLink="/perfil-candidato"
-          class="btn-perfil">
-          <span>👤</span> Perfil
-        </a>
-        
+        @if (showNavigation() && isCandidato()) {
+          <a
+            routerLink="/perfil-candidato"
+            class="btn-perfil">
+            <span>👤</span> Perfil
+          </a>
+        }
+
         <!-- Link para perfil (apenas para empresas) -->
-        <a 
-          *ngIf="showNavigation && userType === 'empresa'" 
-          routerLink="/perfil-empresa"
-          class="btn-perfil">
-          <span>🏢</span> Perfil
-        </a>
-        
+        @if (showNavigation() && isEmpresa()) {
+          <a
+            routerLink="/perfil-empresa"
+            class="btn-perfil">
+            <span>🏢</span> Perfil
+          </a>
+        }
+
         <!-- Botão de logout -->
-        <button 
-          *ngIf="showNavigation" 
-          class="btn-logout" 
-          (click)="onLogout()">
-          <span>🚪</span> Sair
-        </button>
+        @if (showNavigation()) {
+          <button
+            class="btn-logout"
+            (click)="onLogout()">
+            <span>🚪</span> Sair
+          </button>
+        }
       </div>
     </div>
   </div>
