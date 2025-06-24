@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, model } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { VagaCardComponent } from './vaga-card/vaga-card.component';
 
 interface Vaga {
@@ -33,13 +33,44 @@ interface Vaga {
   styleUrls: ['./vagas.component.css']
 })
 export class VagasComponent implements OnInit {
-  vagas: Vaga[] = [];
-  vagasFiltradas: Vaga[] = [];
-  filtroTecnologia = '';
-  filtroModalidade = '';
-  filtroNivel = '';
+  // Signals para gerenciar estado
+  private vagas = signal<Vaga[]>([]);
 
-  constructor() {}
+  // Models para two-way binding
+  filtroTecnologia = model('');
+  filtroModalidade = model('');
+  filtroNivel = model('');
+
+  // Computed signal para vagas filtradas
+  vagasFiltradas = computed(() => {
+    const vagas = this.vagas();
+    const tecFilter = this.filtroTecnologia().toLowerCase();
+    const modFilter = this.filtroModalidade();
+    const nivFilter = this.filtroNivel();
+
+    if (!tecFilter && !modFilter && !nivFilter) {
+      return vagas;
+    }
+
+    return vagas.filter(vaga => {
+      const matchTecnologia = !tecFilter ||
+        vaga.tecnologias.some(tech =>
+          tech.toLowerCase().includes(tecFilter)
+        );
+
+      const matchModalidade = !modFilter ||
+        vaga.modalidade === modFilter;
+
+      const matchNivel = !nivFilter ||
+        vaga.nivel === nivFilter;
+
+      return matchTecnologia && matchModalidade && matchNivel;
+    });
+  });
+
+  // Computed para contagem de resultados
+  totalVagasEncontradas = computed(() => this.vagasFiltradas().length);
+  hasVagas = computed(() => this.totalVagasEncontradas() > 0);
 
   ngOnInit() {
     this.carregarVagas();
@@ -47,7 +78,7 @@ export class VagasComponent implements OnInit {
 
   carregarVagas() {
     // Dados fake de vagas
-    this.vagas = [
+    const vagasData: Vaga[] = [
       {
         id: 1,
         titulo: 'Desenvolvedor Full Stack',
@@ -188,37 +219,19 @@ export class VagasComponent implements OnInit {
       }
     ];
 
-    this.vagasFiltradas = [...this.vagas];
-  }
-
-  filtrarVagas() {
-    this.vagasFiltradas = this.vagas.filter(vaga => {
-      const matchTecnologia = !this.filtroTecnologia || 
-        vaga.tecnologias.some(tech => 
-          tech.toLowerCase().includes(this.filtroTecnologia.toLowerCase())
-        );
-      
-      const matchModalidade = !this.filtroModalidade || 
-        vaga.modalidade === this.filtroModalidade;
-      
-      const matchNivel = !this.filtroNivel || 
-        vaga.nivel === this.filtroNivel;
-
-      return matchTecnologia && matchModalidade && matchNivel;
-    });
+    this.vagas.set(vagasData);
   }
 
   limparFiltros() {
-    this.filtroTecnologia = '';
-    this.filtroModalidade = '';
-    this.filtroNivel = '';
-    this.vagasFiltradas = [...this.vagas];
+    this.filtroTecnologia.set('');
+    this.filtroModalidade.set('');
+    this.filtroNivel.set('');
   }
 
   onVagaInteracao(event: {vagaId: number, acao: 'like' | 'dislike'}) {
     console.log(`Vaga ${event.vagaId} - Ação: ${event.acao}`);
     // Implementar a lógica de like/dislike
     // Remover a vaga da lista após interação
-    this.vagasFiltradas = this.vagasFiltradas.filter(vaga => vaga.id !== event.vagaId);
+    this.vagas.update(vagas => vagas.filter(vaga => vaga.id !== event.vagaId));
   }
 }

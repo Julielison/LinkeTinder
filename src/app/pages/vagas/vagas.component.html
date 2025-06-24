@@ -9,20 +9,18 @@
     <div class="filtros-container">
       <div class="filtro-group">
         <label for="tecnologia">Tecnologia:</label>
-        <input 
-          type="text" 
+        <input
+          type="text"
           id="tecnologia"
           [(ngModel)]="filtroTecnologia"
-          (input)="filtrarVagas()"
           placeholder="Ex: React, Java, Python...">
       </div>
 
       <div class="filtro-group">
         <label for="modalidade">Modalidade:</label>
-        <select 
+        <select
           id="modalidade"
-          [(ngModel)]="filtroModalidade"
-          (change)="filtrarVagas()">
+          [(ngModel)]="filtroModalidade">
           <option value="">Todas</option>
           <option value="Remoto">Remoto</option>
           <option value="Presencial">Presencial</option>
@@ -32,10 +30,9 @@
 
       <div class="filtro-group">
         <label for="nivel">Nível:</label>
-        <select 
+        <select
           id="nivel"
-          [(ngModel)]="filtroNivel"
-          (change)="filtrarVagas()">
+          [(ngModel)]="filtroNivel">
           <option value="">Todos</option>
           <option value="Júnior">Júnior</option>
           <option value="Pleno">Pleno</option>
@@ -53,24 +50,27 @@
   <!-- Lista de Vagas -->
   <div class="vagas-grid">
     <div class="resultados-info">
-      <span>{{ vagasFiltradas.length }} vaga(s) encontrada(s)</span>
+      <span>{{ totalVagasEncontradas() }} vaga(s) encontrada(s)</span>
     </div>
 
-    <div class="vagas-lista">
-      <app-vaga-card 
-        *ngFor="let vaga of vagasFiltradas" 
-        [vaga]="vaga"
-        (vagaInteracao)="onVagaInteracao($event)">
-      </app-vaga-card>
-    </div>
-
-    <div *ngIf="vagasFiltradas.length === 0" class="empty-state">
-      <div class="empty-icon">📭</div>
-      <h3>Nenhuma vaga encontrada</h3>
-      <p>Tente ajustar os filtros ou verifique novamente mais tarde.</p>
-      <button class="btn-primary" (click)="limparFiltros()">
-        Ver todas as vagas
-      </button>
-    </div>
+    @if (hasVagas()) {
+      <div class="vagas-lista">
+        @for (vaga of vagasFiltradas(); track vaga.id) {
+          <app-vaga-card
+            [vaga]="vaga"
+            (vagaInteracao)="onVagaInteracao($event)">
+          </app-vaga-card>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>Nenhuma vaga encontrada</h3>
+        <p>Tente ajustar os filtros ou verifique novamente mais tarde.</p>
+        <button class="btn-primary" (click)="limparFiltros()">
+          Ver todas as vagas
+        </button>
+      </div>
+    }
   </div>
 </div>
