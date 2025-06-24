@@ -1,0 +1,105 @@
+<div class="vagas-container">
+  <div class="vagas-header">
+    <h1>Vagas Disponíveis</h1>
+    <p>Encontre sua próxima oportunidade profissional</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-section">
+    <div class="filtros-container">
+      <div class="filtro-group">
+        <label for="tecnologia">Tecnologia:</label>
+        <input
+          type="text"
+          id="tecnologia"
+          [(ngModel)]="filtroTecnologia"
+          placeholder="Ex: React, Java, Python..."
+          [disabled]="isLoading()">
+      </div>
+
+      <div class="filtro-group">
+        <label for="modalidade">Modalidade:</label>
+        <select
+          id="modalidade"
+          [(ngModel)]="filtroModalidade"
+          [disabled]="isLoading()">
+          <option value="">Todas</option>
+          <option value="Remoto">Remoto</option>
+          <option value="Presencial">Presencial</option>
+          <option value="Híbrido">Híbrido</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="nivel">Nível:</label>
+        <select
+          id="nivel"
+          [(ngModel)]="filtroNivel"
+          [disabled]="isLoading()">
+          <option value="">Todos</option>
+          <option value="Júnior">Júnior</option>
+          <option value="Pleno">Pleno</option>
+          <option value="Sênior">Sênior</option>
+          <option value="Especialista">Especialista</option>
+        </select>
+      </div>
+
+      <button
+        class="btn-limpar"
+        (click)="limparFiltros()"
+        [disabled]="isLoading()">
+        🗑️ Limpar Filtros
+      </button>
+
+      <button
+        class="btn-recarregar"
+        (click)="recarregarVagas()"
+        [disabled]="isLoading()">
+        🔄 Recarregar
+      </button>
+    </div>
+  </div>
+
+  <!-- Estados de Loading e Erro -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-spinner">⏳</div>
+      <p>Carregando vagas...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <div class="error-icon">❌</div>
+      <h3>{{ error() }}</h3>
+      <button class="btn-primary" (click)="recarregarVagas()">
+        Tentar novamente
+      </button>
+    </div>
+  } @else {
+    <!-- Lista de Vagas -->
+    <div class="vagas-grid">
+      <div class="resultados-info">
+        <span>{{ totalVagasEncontradas() }} vaga(s) encontrada(s)</span>
+      </div>
+
+      @if (hasVagas()) {
+        <div class="vagas-lista">
+          @for (vaga of vagasFiltradas(); track vaga.id) {
+            <app-vaga-card
+              [vaga]="vaga"
+              (vagaInteracao)="onVagaInteracao($event)">
+            </app-vaga-card>
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Nenhuma vaga encontrada</h3>
+          <p>Tente ajustar os filtros ou verifique novamente mais tarde.</p>
+          <button class="btn-primary" (click)="limparFiltros()">
+            Ver todas as vagas
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,94 @@
+<div class="vaga-card">
+  <!-- Header da vaga -->
+  <div class="vaga-header">
+    <div class="empresa-info">
+      <div class="empresa-logo">{{ vaga().empresa.logo }}</div>
+      <div class="empresa-details">
+        <h3 class="vaga-titulo">{{ vaga().titulo }}</h3>
+        <p class="empresa-nome">{{ vaga().empresa.nome }}</p>
+        <p class="empresa-local">📍 {{ vaga().empresa.local }}</p>
+      </div>
+    </div>
+    <div class="vaga-badges">
+      <span class="badge tipo" [style.background-color]="tipoColor()">
+        {{ vaga().tipo }}
+      </span>
+      <span class="badge nivel" [style.background-color]="nivelColor()">
+        {{ vaga().nivel }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Informações principais -->
+  <div class="vaga-info">
+    <div class="info-row">
+      <span class="info-item">
+        💰 {{ salarioFormatado() }}
+      </span>
+      <span class="info-item">
+        {{ modalidadeIcon() }} {{ vaga().modalidade }}
+      </span>
+    </div>
+
+    <div class="info-row">
+      <span class="info-item publicacao">
+        🕒 Publicada há {{ diasPublicacao() }} dia(s)
+      </span>
+    </div>
+  </div>
+
+  <!-- Tecnologias -->
+  <div class="tecnologias-section">
+    <h4>Tecnologias:</h4>
+    <div class="tecnologias-list">
+      @for (tech of vaga().tecnologias; track tech) {
+        <span class="tecnologia-tag">
+          {{ tech }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Descrição -->
+  <div class="descricao-section">
+    <p class="vaga-descricao">{{ vaga().descricao }}</p>
+  </div>
+
+  <!-- Botão para mostrar detalhes -->
+  <button class="btn-detalhes" (click)="toggleDetalhes()">
+    {{ detalhesButtonText() }}
+  </button>
+
+  <!-- Detalhes expandidos -->
+  <div class="detalhes-section" [class.expanded]="showDetalhes()">
+    <div class="detalhes-content">
+      <div class="requisitos">
+        <h4>📋 Requisitos:</h4>
+        <ul>
+          @for (requisito of vaga().requisitos; track requisito) {
+            <li>{{ requisito }}</li>
+          }
+        </ul>
+      </div>
+
+      <div class="beneficios">
+        <h4>🎁 Benefícios:</h4>
+        <ul>
+          @for (beneficio of vaga().beneficios; track beneficio) {
+            <li>{{ beneficio }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ações -->
+  <div class="vaga-actions">
+    <button class="btn-action dislike" (click)="onDislike()">
+      ❌ Não Interessante
+    </button>
+    <button class="btn-action like" (click)="onLike()">
+      ❤️ Tenho Interesse
+    </button>
+  </div>
+</div>

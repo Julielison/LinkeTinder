@@ -1,0 +1,81 @@
+<div class="perfil-container">
+  <div class="perfil-card">
+    <div class="perfil-header">
+      <div class="avatar">
+        <span class="avatar-icon">👤</span>
+      </div>
+      <div class="perfil-info">
+        <h1>{{ candidato().nome }}</h1>
+        <p class="idade">{{ idade() }} anos</p>
+        <p class="email">{{ candidato().email }}</p>
+      </div>
+      <button class="btn-editar" (click)="editarPerfil()">
+        <span>✏️</span> Editar
+      </button>
+    </div>
+
+    <div class="perfil-content">
+      <div class="section">
+        <h2>
+          <span class="section-icon">🛠️</span>
+          Tecnologias
+        </h2>
+        <div class="tecnologias-grid">
+          @for (tecnologia of candidato().tecnologias; track tecnologia) {
+            <span class="tecnologia-badge">
+              {{ tecnologia }}
+            </span>
+          }
+        </div>
+        @if (candidato().tecnologias.length === 0) {
+          <div class="empty-state">
+            Nenhuma tecnologia adicionada ainda
+          </div>
+        }
+      </div>
+
+      <div class="section">
+        <h2>
+          <span class="section-icon">💼</span>
+          Experiência
+        </h2>
+        <div class="experiencia-info">
+          <p>Desenvolvedor com {{ experiencia() }} de experiência</p>
+          <p>Especializado em {{ tecnologiasPrincipais() }}</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>
+          <span class="section-icon">🎯</span>
+          Interesses
+        </h2>
+        <div class="interesses-info">
+          <p>Buscando oportunidades em desenvolvimento de software</p>
+          <p>Interessado em trabalho remoto e híbrido</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>
+          <span class="section-icon">📊</span>
+          Estatísticas
+        </h2>
+        <div class="estatisticas-grid">
+          <div class="stat-card">
+            <div class="stat-number">{{ stats().likes }}</div>
+            <div class="stat-label">Curtidas Recebidas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{{ stats().matches }}</div>
+            <div class="stat-label">Matches</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{{ stats().visualizacoes }}</div>
+            <div class="stat-label">Visualizações</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

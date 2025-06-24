@@ -1,0 +1,309 @@
+{
+  "vagas": [
+    {
+      "id": 1,
+      "titulo": "Desenvolvedor Full Stack",
+      "empresa": {
+        "nome": "TechCorp",
+        "logo": "🏢",
+        "local": "São Paulo, SP"
+      },
+      "salario": {
+        "min": 8000,
+        "max": 12000
+      },
+      "tipo": "CLT",
+      "modalidade": "Híbrido",
+      "tecnologias": [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "MongoDB"
+      ],
+      "descricao": "Procuramos um desenvolvedor full stack para integrar nossa equipe de desenvolvimento de produtos inovadores.",
+      "requisitos": [
+        "Experiência com React e Node.js",
+        "Conhecimento em TypeScript",
+        "Experiência com bancos NoSQL",
+        "Conhecimento em Git"
+      ],
+      "beneficios": [
+        "Vale alimentação",
+        "Plano de saúde",
+        "Home office",
+        "Gympass"
+      ],
+      "publicadaEm": "2024-06-01T00:00:00Z",
+      "nivel": "Pleno"
+    },
+    {
+      "id": 2,
+      "titulo": "Desenvolvedor Frontend React",
+      "empresa": {
+        "nome": "StartupX",
+        "logo": "🚀",
+        "local": "Rio de Janeiro, RJ"
+      },
+      "salario": {
+        "min": 6000,
+        "max": 9000
+      },
+      "tipo": "CLT",
+      "modalidade": "Remoto",
+      "tecnologias": [
+        "React",
+        "JavaScript",
+        "CSS",
+        "Redux"
+      ],
+      "descricao": "Oportunidade para trabalhar em uma startup em crescimento desenvolvendo interfaces modernas e responsivas.",
+      "requisitos": [
+        "Sólida experiência com React",
+        "Domínio de JavaScript ES6+",
+        "Conhecimento em CSS/SASS",
+        "Experiência com Redux ou Context API"
+      ],
+      "beneficios": [
+        "Trabalho 100% remoto",
+        "Flexibilidade de horários",
+        "Stock options"
+      ],
+      "publicadaEm": "2024-06-05T00:00:00Z",
+      "nivel": "Júnior"
+    },
+    {
+      "id": 3,
+      "titulo": "Desenvolvedor Java Senior",
+      "empresa": {
+        "nome": "Enterprise Solutions",
+        "logo": "🏭",
+        "local": "Belo Horizonte, MG"
+      },
+      "salario": {
+        "min": 12000,
+        "max": 18000
+      },
+      "tipo": "CLT",
+      "modalidade": "Presencial",
+      "tecnologias": [
+        "Java",
+        "Spring Boot",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "descricao": "Lidere projetos de grande escala em uma empresa consolidada no mercado financeiro.",
+      "requisitos": [
+        "Experiência sênior com Java",
+        "Domínio do ecossistema Spring",
+        "Conhecimento em arquitetura de microsserviços",
+        "Experiência com containerização"
+      ],
+      "beneficios": [
+        "Plano de saúde premium",
+        "Previdência privada",
+        "Carro da empresa",
+        "Bônus anual"
+      ],
+      "publicadaEm": "2024-06-03T00:00:00Z",
+      "nivel": "Sênior"
+    },
+    {
+      "id": 4,
+      "titulo": "Desenvolvedor Mobile Flutter",
+      "empresa": {
+        "nome": "MobileFirst",
+        "logo": "📱",
+        "local": "Florianópolis, SC"
+      },
+      "salario": {
+        "min": 7000,
+        "max": 11000
+      },
+      "tipo": "PJ",
+      "modalidade": "Híbrido",
+      "tecnologias": [
+        "Flutter",
+        "Dart",
+        "Firebase",
+        "REST API"
+      ],
+      "descricao": "Desenvolva aplicativos móveis inovadores para milhões de usuários em uma das principais empresas de tech do sul do país.",
+      "requisitos": [
+        "Experiência sólida com Flutter e Dart",
+        "Conhecimento em Firebase e integração com APIs",
+        "Experiência com publicação nas lojas de apps",
+        "Conhecimento em arquitetura limpa para mobile"
+      ],
+      "beneficios": [
+        "Equipamentos top de linha",
+        "Cursos e certificações",
+        "Ambiente descontraído",
+        "Day off no aniversário"
+      ],
+      "publicadaEm": "2024-06-07T00:00:00Z",
+      "nivel": "Pleno"
+    },
+    {
+      "id": 5,
+      "titulo": "DevOps Engineer",
+      "empresa": {
+        "nome": "CloudTech",
+        "logo": "☁️",
+        "local": "São Paulo, SP"
+      },
+      "salario": {
+        "min": 10000,
+        "max": 15000
+      },
+      "tipo": "CLT",
+      "modalidade": "Remoto",
+      "tecnologias": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "descricao": "Trabalhe com infraestrutura de nuvem de alta disponibilidade e automação de processos em uma empresa líder em soluções cloud.",
+      "requisitos": [
+        "Experiência com AWS, Azure ou GCP",
+        "Domínio de Docker e Kubernetes",
+        "Conhecimento em Infrastructure as Code (Terraform)",
+        "Experiência com CI/CD e automação"
+      ],
+      "beneficios": [
+        "Trabalho 100% remoto",
+        "Plano de saúde",
+        "Certificações AWS pagas",
+        "Bônus por performance",
+        "Auxílio home office"
+      ],
+      "publicadaEm": "2024-06-02T00:00:00Z",
+      "nivel": "Sênior"
+    },
+    {
+      "id": 6,
+      "titulo": "Estágio em Desenvolvimento Web",
+      "empresa": {
+        "nome": "DevAcademy",
+        "logo": "🎓",
+        "local": "Porto Alegre, RS"
+      },
+      "salario": {
+        "min": 1200,
+        "max": 1800
+      },
+      "tipo": "Estágio",
+      "modalidade": "Híbrido",
+      "tecnologias": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Vue.js"
+      ],
+      "descricao": "Oportunidade única para iniciar sua carreira em desenvolvimento web com mentoria especializada e projetos reais.",
+      "requisitos": [
+        "Cursando superior em TI, Ciência da Computação ou áreas afins",
+        "Conhecimento básico em HTML, CSS e JavaScript",
+        "Interesse em aprender frameworks modernos",
+        "Disponibilidade de 6 horas diárias"
+      ],
+      "beneficios": [
+        "Mentoria especializada",
+        "Vale transporte",
+        "Vale alimentação",
+        "Certificações gratuitas",
+        "Ambiente jovem"
+      ],
+      "publicadaEm": "2024-06-08T00:00:00Z",
+      "nivel": "Júnior"
+    }
+  ],
+  "candidatos": [
+    {
+      "id": 1,
+      "nome": "João Silva",
+      "email": "joao@email.com",
+      "dataNascimento": "1995-03-15",
+      "tecnologias": [
+        "React",
+        "Node.js",
+        "TypeScript"
+      ],
+      "experiencia": "3 anos",
+      "local": "São Paulo, SP",
+      "avatar": "👨‍💻"
+    },
+    {
+      "id": 2,
+      "nome": "Maria Santos",
+      "email": "maria@email.com",
+      "dataNascimento": "1990-08-22",
+      "tecnologias": [
+        "Java",
+        "Spring",
+        "PostgreSQL"
+      ],
+      "experiencia": "5 anos",
+      "local": "Rio de Janeiro, RJ",
+      "avatar": "👩‍💻"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 1,
+      "nomeEmpresa": "TechCorp",
+      "email": "contato@techcorp.com",
+      "local": "São Paulo, SP",
+      "setor": "Tecnologia",
+      "tamanho": "Média",
+      "logo": "🏢"
+    },
+    {
+      "id": 2,
+      "nomeEmpresa": "StartupX",
+      "email": "rh@startupx.com",
+      "local": "Rio de Janeiro, RJ",
+      "setor": "Startup",
+      "tamanho": "Pequena",
+      "logo": "🚀"
+    },
+    {
+      "id": 3,
+      "nomeEmpresa": "MobileFirst",
+      "email": "jobs@mobilefirst.com",
+      "local": "Florianópolis, SC",
+      "setor": "Tecnologia Mobile",
+      "tamanho": "Média",
+      "logo": "📱"
+    },
+    {
+      "id": 4,
+      "nomeEmpresa": "CloudTech",
+      "email": "careers@cloudtech.com",
+      "local": "São Paulo, SP",
+      "setor": "Cloud Computing",
+      "tamanho": "Grande",
+      "logo": "☁️"
+    },
+    {
+      "id": 5,
+      "nomeEmpresa": "DevAcademy",
+      "email": "estagios@devacademy.com",
+      "local": "Porto Alegre, RS",
+      "setor": "Educação Tech",
+      "tamanho": "Pequena",
+      "logo": "🎓"
+    }
+  ],
+  "matches": [
+    {
+      "id": 1,
+      "candidatoId": 1,
+      "vagaId": 1,
+      "status": "match",
+      "dataMatch": "2024-06-10T00:00:00Z"
+    }
+  ],
+  "likes": [
+  ]
+}
