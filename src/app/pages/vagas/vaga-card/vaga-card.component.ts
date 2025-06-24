@@ -1,27 +1,6 @@
 import { Component, input, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Vaga {
-  id: number;
-  titulo: string;
-  empresa: {
-    nome: string;
-    logo: string;
-    local: string;
-  };
-  salario: {
-    min: number;
-    max: number;
-  };
-  tipo: 'CLT' | 'PJ' | 'Freelancer' | 'Estágio';
-  modalidade: 'Remoto' | 'Presencial' | 'Híbrido';
-  tecnologias: string[];
-  descricao: string;
-  requisitos: string[];
-  beneficios: string[];
-  publicadaEm: Date;
-  nivel: 'Júnior' | 'Pleno' | 'Sênior' | 'Especialista';
-}
+import { Vaga } from '../../../services/vaga.service';
 
 @Component({
   selector: 'app-vaga-card',
@@ -31,12 +10,16 @@ interface Vaga {
   styleUrls: ['./vaga-card.component.css']
 })
 export class VagaCardComponent {
+  // Nova sintaxe input() do Angular 19
   vaga = input.required<Vaga>();
 
+  // Nova sintaxe output() do Angular 19
   vagaInteracao = output<{vagaId: number, acao: 'like' | 'dislike'}>();
 
+  // Signal para controlar detalhes
   showDetalhes = signal(false);
 
+  // Computed signals para valores derivados
   salarioFormatado = computed(() => {
     const vaga = this.vaga();
     return `R$ ${vaga.salario.min.toLocaleString()} - R$ ${vaga.salario.max.toLocaleString()}`;
@@ -44,7 +27,7 @@ export class VagaCardComponent {
 
   diasPublicacao = computed(() => {
     const hoje = new Date();
-    const publicacao = new Date(this.vaga().publicadaEm);
+    const publicacao = new Date(this.vaga().publicadaEm); // Conversão string → Date
     const diffTime = Math.abs(hoje.getTime() - publicacao.getTime());
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   });
