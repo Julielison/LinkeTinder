@@ -3,6 +3,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@angular/cli": "^17.3.17"
+    "@angular/cli": "^19.2.15"
   }
 }

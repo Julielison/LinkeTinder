@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -22,26 +22,23 @@ interface Stats {
   templateUrl: './perfil-candidato.component.html',
   styleUrls: ['./perfil-candidato.component.css']
 })
-export class PerfilCandidatoComponent {
-  candidato = signal<Candidato>({
+export class PerfilCandidatoComponent implements OnInit {
+  candidato: Candidato = {
     nome: '',
     email: '',
     dataNascimento: '',
     tecnologias: []
-  });
+  };
 
-  stats = signal<Stats>({
+  stats: Stats = {
     likes: 0,
     matches: 0,
     visualizacoes: 0
-  });
+  };
 
-  // Computed properties
-  idade = computed(() => this.calcularIdade(this.candidato().dataNascimento));
-  experiencia = computed(() => this.calcularExperiencia());
-  tecnologiasPrincipais = computed(() => this.getTecnologiasPrincipais());
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
+  ngOnInit() {
     this.carregarDadosCandidato();
   }
 
@@ -49,27 +46,27 @@ export class PerfilCandidatoComponent {
     const candidatoData = localStorage.getItem('candidatoData');
     if (candidatoData) {
       const dados = JSON.parse(candidatoData);
-      this.candidato.set({
+      this.candidato = {
         nome: dados.nome,
         email: dados.email,
         dataNascimento: dados.dataNascimento,
         tecnologias: dados.tecnologias || []
-      });
+      };
       
       // Estatísticas iniciais para novo usuário
-      this.stats.set({
+      this.stats = {
         likes: Math.floor(Math.random() * 10),
         matches: Math.floor(Math.random() * 5),
         visualizacoes: Math.floor(Math.random() * 20) + 5
-      });
+      };
     } else {
       // Dados padrão caso não tenha dados salvos
-      this.candidato.set({
+      this.candidato = {
         nome: 'Usuário',
         email: 'usuario@email.com',
         dataNascimento: '1990-01-01',
         tecnologias: []
-      });
+      };
     }
   }
 
@@ -87,16 +84,15 @@ export class PerfilCandidatoComponent {
   }
 
   calcularExperiencia(): string {
-    const idade = this.calcularIdade(this.candidato().dataNascimento);
+    const idade = this.calcularIdade(this.candidato.dataNascimento);
     const experiencia = Math.max(0, idade - 18);
     return experiencia > 0 ? `${experiencia} anos` : 'Iniciante';
   }
 
   getTecnologiasPrincipais(): string {
-    const tecnologias = this.candidato().tecnologias;
-    if (tecnologias.length === 0) return 'Tecnologias diversas';
-    if (tecnologias.length <= 2) return tecnologias.join(' e ');
-    return tecnologias.slice(0, 2).join(', ') + ` e mais ${tecnologias.length - 2}`;
+    if (this.candidato.tecnologias.length === 0) return 'Tecnologias diversas';
+    if (this.candidato.tecnologias.length <= 2) return this.candidato.tecnologias.join(' e ');
+    return this.candidato.tecnologias.slice(0, 2).join(', ') + ` e mais ${this.candidato.tecnologias.length - 2}`;
   }
 
   editarPerfil() {

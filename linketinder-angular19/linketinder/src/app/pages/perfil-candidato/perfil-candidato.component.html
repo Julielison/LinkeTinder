@@ -5,9 +5,9 @@
         <span class="avatar-icon">👤</span>
       </div>
       <div class="perfil-info">
-        <h1>{{ candidato().nome }}</h1>
-        <p class="idade">{{ idade() }} anos</p>
-        <p class="email">{{ candidato().email }}</p>
+        <h1>{{ candidato.nome }}</h1>
+        <p class="idade">{{ calcularIdade(candidato.dataNascimento) }} anos</p>
+        <p class="email">{{ candidato.email }}</p>
       </div>
       <button class="btn-editar" (click)="editarPerfil()">
         <span>✏️</span> Editar
@@ -21,17 +21,15 @@
           Tecnologias
         </h2>
         <div class="tecnologias-grid">
-          @for (tecnologia of candidato().tecnologias; track tecnologia) {
-            <span class="tecnologia-badge">
-              {{ tecnologia }}
-            </span>
-          }
+          <span 
+            *ngFor="let tecnologia of candidato.tecnologias" 
+            class="tecnologia-badge">
+            {{ tecnologia }}
+          </span>
         </div>
-        @if (candidato().tecnologias.length === 0) {
-          <div class="empty-state">
-            Nenhuma tecnologia adicionada ainda
-          </div>
-        }
+        <div *ngIf="candidato.tecnologias.length === 0" class="empty-state">
+          Nenhuma tecnologia adicionada ainda
+        </div>
       </div>
 
       <div class="section">
@@ -40,8 +38,8 @@
           Experiência
         </h2>
         <div class="experiencia-info">
-          <p>Desenvolvedor com {{ experiencia() }} de experiência</p>
-          <p>Especializado em {{ tecnologiasPrincipais() }}</p>
+          <p>Desenvolvedor com {{ calcularExperiencia() }} de experiência</p>
+          <p>Especializado em {{ getTecnologiasPrincipais() }}</p>
         </div>
       </div>
 
@@ -63,15 +61,15 @@
         </h2>
         <div class="estatisticas-grid">
           <div class="stat-card">
-            <div class="stat-number">{{ stats().likes }}</div>
+            <div class="stat-number">{{ stats.likes }}</div>
             <div class="stat-label">Curtidas Recebidas</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">{{ stats().matches }}</div>
+            <div class="stat-number">{{ stats.matches }}</div>
             <div class="stat-label">Matches</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">{{ stats().visualizacoes }}</div>
+            <div class="stat-number">{{ stats.visualizacoes }}</div>
             <div class="stat-label">Visualizações</div>
           </div>
         </div>
