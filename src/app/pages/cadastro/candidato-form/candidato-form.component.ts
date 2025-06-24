@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
+import { Component, signal, computed, output, viewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -10,13 +10,18 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   styleUrls: ['./candidato-form.component.css']
 })
 export class CandidatoFormComponent {
-  @ViewChild('tecnologiaInput') tecnologiaInput!: ElementRef;
-  @Output() formSubmit = new EventEmitter<any>();
-  @Output() voltarClick = new EventEmitter<void>();
-  @Output() loginClick = new EventEmitter<void>();
-  
+  tecnologiaInput = viewChild<ElementRef>('tecnologiaInput');
+
+  formSubmit = output<any>();
+  voltarClick = output<void>();
+  loginClick = output<void>();
+
   candidatoForm: FormGroup;
-  tecnologias: string[] = [];
+  tecnologias = signal<string[]>([]);
+
+  // Computed properties
+  hasTecnologias = computed(() => this.tecnologias().length > 0);
+  totalTecnologias = computed(() => this.tecnologias().length);
 
   constructor(private fb: FormBuilder) {
     this.candidatoForm = this.createForm();
@@ -36,16 +41,16 @@ export class CandidatoFormComponent {
       event.preventDefault();
       const input = event.target as HTMLInputElement;
       const tecnologia = input.value.trim();
-      
-      if (tecnologia && !this.tecnologias.includes(tecnologia)) {
-        this.tecnologias.push(tecnologia);
+
+      if (tecnologia && !this.tecnologias().includes(tecnologia)) {
+        this.tecnologias.update(techs => [...techs, tecnologia]);
         input.value = '';
       }
     }
   }
 
   removerTecnologia(index: number) {
-    this.tecnologias.splice(index, 1);
+    this.tecnologias.update(techs => techs.filter((_, i) => i !== index));
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -58,7 +63,7 @@ export class CandidatoFormComponent {
       const formData = {
         ...this.candidatoForm.value,
         userType: 'candidato',
-        tecnologias: this.tecnologias
+        tecnologias: this.tecnologias()
       };
       this.formSubmit.emit(formData);
     } else {
