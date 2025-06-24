@@ -2,19 +2,19 @@
   <!-- Header da vaga -->
   <div class="vaga-header">
     <div class="empresa-info">
-      <div class="empresa-logo">{{ vaga.empresa.logo }}</div>
+      <div class="empresa-logo">{{ vaga().empresa.logo }}</div>
       <div class="empresa-details">
-        <h3 class="vaga-titulo">{{ vaga.titulo }}</h3>
-        <p class="empresa-nome">{{ vaga.empresa.nome }}</p>
-        <p class="empresa-local">📍 {{ vaga.empresa.local }}</p>
+        <h3 class="vaga-titulo">{{ vaga().titulo }}</h3>
+        <p class="empresa-nome">{{ vaga().empresa.nome }}</p>
+        <p class="empresa-local">📍 {{ vaga().empresa.local }}</p>
       </div>
     </div>
     <div class="vaga-badges">
-      <span class="badge tipo" [style.background-color]="getTipoColor()">
-        {{ vaga.tipo }}
+      <span class="badge tipo" [style.background-color]="tipoColor()">
+        {{ vaga().tipo }}
       </span>
-      <span class="badge nivel" [style.background-color]="getNivelColor()">
-        {{ vaga.nivel }}
+      <span class="badge nivel" [style.background-color]="nivelColor()">
+        {{ vaga().nivel }}
       </span>
     </div>
   </div>
@@ -23,16 +23,16 @@
   <div class="vaga-info">
     <div class="info-row">
       <span class="info-item">
-        💰 {{ formatarSalario() }}
+        💰 {{ salarioFormatado() }}
       </span>
       <span class="info-item">
-        {{ getModalidadeIcon() }} {{ vaga.modalidade }}
+        {{ modalidadeIcon() }} {{ vaga().modalidade }}
       </span>
     </div>
-    
+
     <div class="info-row">
       <span class="info-item publicacao">
-        🕒 Publicada há {{ calcularDiasPublicacao() }} dia(s)
+        🕒 Publicada há {{ diasPublicacao() }} dia(s)
       </span>
     </div>
   </div>
@@ -41,38 +41,42 @@
   <div class="tecnologias-section">
     <h4>Tecnologias:</h4>
     <div class="tecnologias-list">
-      <span 
-        *ngFor="let tech of vaga.tecnologias" 
-        class="tecnologia-tag">
-        {{ tech }}
-      </span>
+      @for (tech of vaga().tecnologias; track tech) {
+        <span class="tecnologia-tag">
+          {{ tech }}
+        </span>
+      }
     </div>
   </div>
 
   <!-- Descrição -->
   <div class="descricao-section">
-    <p class="vaga-descricao">{{ vaga.descricao }}</p>
+    <p class="vaga-descricao">{{ vaga().descricao }}</p>
   </div>
 
   <!-- Botão para mostrar detalhes -->
   <button class="btn-detalhes" (click)="toggleDetalhes()">
-    {{ showDetalhes ? '🔼 Ocultar detalhes' : '🔽 Ver detalhes' }}
+    {{ detalhesButtonText() }}
   </button>
 
   <!-- Detalhes expandidos -->
-  <div class="detalhes-section" [class.expanded]="showDetalhes">
+  <div class="detalhes-section" [class.expanded]="showDetalhes()">
     <div class="detalhes-content">
       <div class="requisitos">
         <h4>📋 Requisitos:</h4>
         <ul>
-          <li *ngFor="let requisito of vaga.requisitos">{{ requisito }}</li>
+          @for (requisito of vaga().requisitos; track requisito) {
+            <li>{{ requisito }}</li>
+          }
         </ul>
       </div>
 
       <div class="beneficios">
         <h4>🎁 Benefícios:</h4>
         <ul>
-          <li *ngFor="let beneficio of vaga.beneficios">{{ beneficio }}</li>
+          @for (beneficio of vaga().beneficios; track beneficio) {
+            <li>{{ beneficio }}</li>
+          }
         </ul>
       </div>
     </div>
