@@ -69,30 +69,12 @@ export class VagaCardComponent {
     }
   });
 
-  // Computed para texto do botão de detalhes
   detalhesButtonText = computed(() =>
     this.showDetalhes() ? '🔼 Ocultar detalhes' : '🔽 Ver detalhes'
   );
 
-  toggleDetalhes(idVaga: number) {
-    if (this.showDetalhes()) {
-      this.showDetalhes.set(false);
-      return;
-    }
-
-    this.vagaService.obterDescricao(idVaga).subscribe({
-      next: (descricao) => {
-        if (descricao) {
-          console.log('Descrição obtida:', descricao);
-          this.showDetalhes.set(true);
-        } else {
-          console.warn('Descrição não encontrada para a vaga:', idVaga);
-        }
-      },
-      error: (error) => {
-        console.error('Erro ao obter descrição da vaga:', error);
-      }
-    });
+  toggleDetalhes() {
+    this.showDetalhes.update(current => !current);
   }
 
   onLike() {
@@ -103,15 +85,12 @@ export class VagaCardComponent {
     this.vagaInteracao.emit({ vagaId: this.vaga().id, acao: 'dislike' });
   }
 
-  // Método para buscar dados da empresa
   onEmpresaHover() {
-    // Cancela timer de leave se existir
     if (this.leaveTimer) {
       clearTimeout(this.leaveTimer);
       this.leaveTimer = null;
     }
 
-    // Se já está carregando ou já tem dados, apenas mostra
     if (this.loadingEmpresa() || this.empresaData()) {
       this.showEmpresaDetails.set(true);
       return;

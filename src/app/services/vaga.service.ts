@@ -124,15 +124,6 @@ export class VagaService {
     );
   }
 
-  obterDescricao(id: number): Observable<string | null> {
-    return this.http.get<Vaga>(`${this.apiUrl}/vagas/${id}`).pipe(
-      map(vaga => vaga.descricao),
-      catchError(error => {
-        console.error('Erro ao obter descrição da vaga:', error);
-        return of(null);
-      })
-    );
-  }
 
   // Buscar vagas por tecnologia
   buscarPorTecnologia(tecnologia: string): Observable<Vaga[]> {
