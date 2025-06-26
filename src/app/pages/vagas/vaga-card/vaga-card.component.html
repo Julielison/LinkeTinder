@@ -5,7 +5,57 @@
       <div class="empresa-logo">{{ vaga().empresa.logo }}</div>
       <div class="empresa-details">
         <h3 class="vaga-titulo">{{ vaga().titulo }}</h3>
-        <p class="empresa-nome">{{ vaga().empresa.nome }}</p>
+        <div class="empresa-nome-container">
+          <p class="empresa-nome empresa-hover"
+             (mouseenter)="onEmpresaHover()"
+             (mouseleave)="onEmpresaLeave()">
+            {{ vaga().empresa.nome }}
+            @if (loadingEmpresa()) {
+              <span class="loading-icon">⏳</span>
+            }
+          </p>
+
+          <!-- Tooltip com dados da empresa -->
+          @if (showEmpresaDetails()) {
+            <div class="empresa-tooltip"
+                 (mouseenter)="onTooltipEnter()"
+                 (mouseleave)="onTooltipLeave()">
+
+              @if (loadingEmpresa()) {
+                <div class="tooltip-loading">
+                  <span class="loading-icon">⏳</span>
+                  <span>Carregando dados da empresa...</span>
+                </div>
+              } @else if (empresaData()) {
+                <div class="tooltip-header">
+                  <span class="tooltip-logo">{{ empresaData()!.logo }}</span>
+                  <div>
+                    <h4>{{ empresaData()!.nomeEmpresa }}</h4>
+                    <p class="tooltip-setor">{{ empresaData()!.setor }}</p>
+                  </div>
+                </div>
+                <div class="tooltip-content">
+                  <div class="tooltip-item">
+                    <span class="tooltip-label">📧 Email:</span>
+                    <span>{{ empresaData()!.email }}</span>
+                  </div>
+                  <div class="tooltip-item">
+                    <span class="tooltip-label">📍 Local:</span>
+                    <span>{{ empresaData()!.local }}</span>
+                  </div>
+                  <div class="tooltip-item">
+                    <span class="tooltip-label">🏢 Tamanho:</span>
+                    <span>{{ empresaData()!.tamanho }}</span>
+                  </div>
+                </div>
+              } @else {
+                <div class="tooltip-error">
+                  <span>❌ Dados da empresa não encontrados</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
         <p class="empresa-local">📍 {{ vaga().empresa.local }}</p>
       </div>
     </div>
@@ -55,7 +105,7 @@
   </div>
 
   <!-- Botão para mostrar detalhes -->
-  <button class="btn-detalhes" (click)="toggleDetalhes()">
+  <button class="btn-detalhes" (click)="toggleDetalhes(vaga().id)">
     {{ detalhesButtonText() }}
   </button>
 
