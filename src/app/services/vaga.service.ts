@@ -8,6 +8,7 @@ export interface Vaga {
   id: number;
   titulo: string;
   empresa: {
+    id: number
     nome: string;
     logo: string;
     local: string;
@@ -24,6 +25,16 @@ export interface Vaga {
   beneficios: string[];
   publicadaEm: string;
   nivel: 'Júnior' | 'Pleno' | 'Sênior' | 'Especialista';
+}
+
+export interface Empresa {
+  id: number;
+  nomeEmpresa: string;
+  email: string;
+  local: string;
+  setor: string;
+  tamanho: string;
+  logo: string;
 }
 
 @Injectable({
@@ -114,6 +125,7 @@ export class VagaService {
     );
   }
 
+
   // Buscar vagas por tecnologia
   buscarPorTecnologia(tecnologia: string): Observable<Vaga[]> {
     return this.http.get<Vaga[]>(`${this.apiUrl}/vagas`).pipe(
@@ -165,5 +177,15 @@ export class VagaService {
       tipo: 'dislike',
       data: new Date().toISOString()
     });
+  }
+
+  obterEmpresaPorId(id: number): Observable<Empresa | null> {
+    return this.http.get<Empresa[]>(`${this.apiUrl}/empresas?id=${id}`).pipe(
+      map(empresas => empresas.length > 0 ? empresas[0] : null),
+      catchError(error => {
+        console.error('Erro ao obter dados da empresa:', error);
+        return of(null);
+      })
+    );
   }
 }
