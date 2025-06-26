@@ -29,6 +29,11 @@
   text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
 
+.logo-img {
+  height: 100px;
+  width: auto;
+}
+
 .hero-content h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -156,28 +161,28 @@
   .logo-hero h1 {
     font-size: 3rem;
   }
-  
+
   .hero-content h2 {
     font-size: 2rem;
   }
-  
+
   .subtitle {
     font-size: 1.1rem;
   }
-  
+
   .features {
     gap: 1rem;
   }
-  
+
   .feature {
     min-width: 120px;
   }
-  
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn-primary,
   .btn-secondary {
     width: 100%;
@@ -189,11 +194,11 @@
   .logo-hero h1 {
     font-size: 2.5rem;
   }
-  
+
   .hero-content h2 {
     font-size: 1.5rem;
   }
-  
+
   .features {
     flex-direction: column;
     align-items: center;
