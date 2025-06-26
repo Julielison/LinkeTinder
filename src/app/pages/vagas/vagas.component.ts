@@ -73,7 +73,6 @@ export class VagasComponent {
       next: (vagas) => {
         this.vagas.set(vagas);
         this.isLoading.set(false);
-        console.log('Vagas carregadas:', vagas);
       },
       error: (error) => {
         console.error('Erro ao carregar vagas:', error);
@@ -97,7 +96,6 @@ export class VagasComponent {
 
   // Tratar interação com vaga (like/dislike)
   onVagaInteracao(event: {vagaId: number, acao: 'like' | 'dislike'}) {
-    console.log(`Vaga ${event.vagaId} - Ação: ${event.acao}`);
 
     // Implementar like/dislike via API
     const candidatoId = 1; // TODO: Pegar do contexto de usuário logado
@@ -105,7 +103,6 @@ export class VagasComponent {
     if (event.acao === 'like') {
       this.vagaService.darLike(candidatoId, event.vagaId).subscribe({
         next: () => {
-          console.log('Like registrado');
           // Remover vaga da lista após interação
           this.vagas.update(vagas => vagas.filter(vaga => vaga.id !== event.vagaId));
         },
@@ -114,7 +111,6 @@ export class VagasComponent {
     } else {
       this.vagaService.rejeitarVaga(candidatoId, event.vagaId).subscribe({
         next: () => {
-          console.log('Rejeição registrada');
           // Remover vaga da lista após interação
           this.vagas.update(vagas => vagas.filter(vaga => vaga.id !== event.vagaId));
         },

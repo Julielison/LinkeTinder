@@ -101,9 +101,8 @@ export class VagaCardComponent {
       this.loadingEmpresa.set(true);
       this.showEmpresaDetails.set(true);
 
-      this.vagaService.obterEmpresaPorNome(this.vaga().empresa.nome).subscribe({
+      this.vagaService.obterEmpresaPorId(this.vaga().empresa.id).subscribe({
         next: (empresa) => {
-          console.log('Dados da empresa carregados:', empresa);
           this.empresaData.set(empresa);
           this.loadingEmpresa.set(false);
 
@@ -112,7 +111,6 @@ export class VagaCardComponent {
             // Força uma pequena animação para garantir que o tooltip apareça
             setTimeout(() => {
               if (this.empresaData() && this.showEmpresaDetails()) {
-                console.log('Tooltip deve estar visível agora');
               }
             }, 50);
           }

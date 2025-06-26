@@ -8,6 +8,7 @@ export interface Vaga {
   id: number;
   titulo: string;
   empresa: {
+    id: number
     nome: string;
     logo: string;
     local: string;
@@ -178,8 +179,8 @@ export class VagaService {
     });
   }
 
-  obterEmpresaPorNome(nomeEmpresa: string): Observable<Empresa | null> {
-    return this.http.get<Empresa[]>(`${this.apiUrl}/empresas?nomeEmpresa=${nomeEmpresa}`).pipe(
+  obterEmpresaPorId(id: number): Observable<Empresa | null> {
+    return this.http.get<Empresa[]>(`${this.apiUrl}/empresas?id=${id}`).pipe(
       map(empresas => empresas.length > 0 ? empresas[0] : null),
       catchError(error => {
         console.error('Erro ao obter dados da empresa:', error);
