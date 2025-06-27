@@ -97,6 +97,18 @@
   align-items: center;
 }
 
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+}
+
 
 /* Responsivo */
 @media (max-width: 768px) {
@@ -106,26 +118,26 @@
     padding: 15px 0;
     gap: 1rem;
   }
-  
+
   .main-nav {
     order: 3;
     flex-basis: 100%;
   }
-  
+
   .main-nav ul {
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
   }
-  
+
   .view-controls {
     order: 2;
   }
-  
+
   .user-actions {
     order: 1;
   }
-  
+
   .toggle-btn {
     padding: 6px 12px;
     font-size: 0.8rem;
@@ -137,15 +149,15 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .main-nav ul {
     gap: 15px;
   }
-  
+
   .view-controls {
     margin: 0.5rem 0;
   }
-  
+
   .logo a {
     font-size: 20px;
   }

@@ -21,7 +21,6 @@ export class CadastroComponent {
   }
 
   onFormSubmit(formData: any) {
-    console.log('Dados do cadastro:', formData);
     
     if (formData.userType === 'candidato') {
       // Salvar dados do candidato como usuário logado
@@ -33,14 +32,14 @@ export class CadastroComponent {
         tecnologias: formData.tecnologias || [],
         tipo: 'candidato'
       };
-      
+
       localStorage.setItem('candidato', JSON.stringify(candidatoLogado));
       localStorage.setItem('candidatoData', JSON.stringify(formData));
       localStorage.setItem('token', 'temp-token-' + Date.now()); // Token temporário
-      
+
       alert('Cadastro realizado com sucesso!');
       this.router.navigate(['/perfil-candidato']);
-      
+
     } else {
       // Salvar dados da empresa como usuário logado
       const empresaLogada = {
@@ -50,11 +49,11 @@ export class CadastroComponent {
         local: formData.local,
         tipo: 'empresa'
       };
-      
+
       localStorage.setItem('empresa', JSON.stringify(empresaLogada));
       localStorage.setItem('empresaData', JSON.stringify(formData));
       localStorage.setItem('token', 'temp-token-' + Date.now()); // Token temporário
-      
+
       alert('Cadastro empresa realizado com sucesso!');
       // Redirecionar para uma página da empresa (Para criar)
       this.router.navigate(['/empresas']);

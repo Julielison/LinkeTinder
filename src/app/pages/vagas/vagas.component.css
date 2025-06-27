@@ -85,6 +85,38 @@
   transform: translateY(-1px);
 }
 
+.btn-recarregar {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btn-recarregar:hover {
+  background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  transform: translateY(-1px);
+}
+
+.btn-recarregar:disabled,
+.btn-limpar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-recarregar:disabled:hover,
+.btn-limpar:disabled:hover {
+  transform: none;
+}
+
 .vagas-grid {
   max-width: 1200px;
   margin: 0 auto;
@@ -145,15 +177,15 @@
   .vagas-container {
     padding: 1rem;
   }
-  
+
   .filtros-container {
     grid-template-columns: 1fr;
   }
-  
+
   .vagas-lista {
     grid-template-columns: 1fr;
   }
-  
+
   .vagas-header h1 {
     font-size: 2rem;
   }

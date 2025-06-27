@@ -4,6 +4,7 @@
       "id": 1,
       "titulo": "Desenvolvedor Full Stack",
       "empresa": {
+        "id": 1,
         "nome": "TechCorp",
         "logo": "🏢",
         "local": "São Paulo, SP"
@@ -40,6 +41,7 @@
       "id": 2,
       "titulo": "Desenvolvedor Frontend React",
       "empresa": {
+        "id": 2,
         "nome": "StartupX",
         "logo": "🚀",
         "local": "Rio de Janeiro, RJ"
@@ -75,6 +77,7 @@
       "id": 3,
       "titulo": "Desenvolvedor Java Senior",
       "empresa": {
+        "id": 3,
         "nome": "Enterprise Solutions",
         "logo": "🏭",
         "local": "Belo Horizonte, MG"
@@ -111,6 +114,7 @@
       "id": 4,
       "titulo": "Desenvolvedor Mobile Flutter",
       "empresa": {
+        "id": 3,
         "nome": "MobileFirst",
         "logo": "📱",
         "local": "Florianópolis, SC"
@@ -147,6 +151,7 @@
       "id": 5,
       "titulo": "DevOps Engineer",
       "empresa": {
+        "id": 4,
         "nome": "CloudTech",
         "logo": "☁️",
         "local": "São Paulo, SP"
@@ -184,6 +189,7 @@
       "id": 6,
       "titulo": "Estágio em Desenvolvimento Web",
       "empresa": {
+        "id": 5,
         "nome": "DevAcademy",
         "logo": "🎓",
         "local": "Porto Alegre, RS"
